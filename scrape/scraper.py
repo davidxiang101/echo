@@ -1,6 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+import sys
+
+sys.path.append("/Users/cactuscolada/Projects/echo")
+from storage.storage_manager import save_to_db
 
 # Load scraping config from a JSON file
 with open("config.json", "r") as file:
@@ -38,6 +42,8 @@ def main():
             content = extract_content(soup, "p")
             if content:
                 print(f"Article content: {content}")
+                if content:
+                    save_to_db(url, content)
 
 
 if __name__ == "__main__":
