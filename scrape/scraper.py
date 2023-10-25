@@ -1,0 +1,41 @@
+import requests
+from bs4 import BeautifulSoup
+import json
+
+# Load scraping config from a JSON file
+with open("config.json", "r") as file:
+    config = json.load(file)
+
+def fetch_article(url):
+    headers = {
+        "User-Agent": "Mozilla/5.0"
+    }
+    response = requests.get(url, headers=headers)
+    
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        return soup
+    else:
+        print(f"Failed to retrieve {url}")
+        return None
+
+def extract_content(soup, tag, class_name):
+    element = soup.find(tag, class_=class_name)
+    if element:
+        return element.get_text()
+    return None
+
+def main():
+    urls = config["urls"]  # Assume the JSON config has a key "urls" with a list of URLs to scrape
+    
+    for url in urls:
+        soup = fetch_article(url)
+        if soup:
+            # Assume articles have text inside <p> tags with class "content"
+            content = extract_content(soup, "p", "content")
+            if content:
+                print(f"Article content: {content}")
+
+if __name__ == "__main__":
+    main()
+
