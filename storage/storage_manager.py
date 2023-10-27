@@ -1,14 +1,17 @@
+import os
 import psycopg2
+from dotenv import load_dotenv
 
 
 def save_to_db(url, content):
+    load_dotenv()
     try:
         connection = psycopg2.connect(
-            user="username",
-            password="password",
-            host="127.0.0.1",
-            port="5432",
-            database="article_db",
+            user=os.getenv("DB_USER"),
+            password=os.getenv("DB_PASS"),
+            host=os.getenv("DB_HOST", "127.0.0.1"),
+            port=os.getenv("DB_PORT", "5432"),
+            database=os.getenv("DB_NAME"),
         )
         cursor = connection.cursor()
         postgreSQL_insert_query = (
