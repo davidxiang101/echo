@@ -40,10 +40,10 @@ class StorageManager:
         self.connection.commit()
 
 
-# Usage
-if __name__ == "__main__":
-    storage_manager = StorageManager()
-    # storage_manager.save_to_db("url", "content")
-    articles = storage_manager.fetch_articles()
-    print(articles)
-    storage_manager.close()
+# # Usage
+# if __name__ == "__main__":
+#     storage_manager = StorageManager()
+#     # storage_manager.save_to_db("url", "content")
+#     articles = storage_manager.fetch_articles()
+#     print(articles)
+#     storage_manager.close()
