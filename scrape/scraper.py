@@ -4,7 +4,7 @@ import json
 import sys
 
 sys.path.append("/Users/cactuscolada/Projects/echo")
-from storage.storage_manager import save_to_db
+from storage.storage_manager import StorageManager
 
 # Load scraping config from a JSON file
 with open("config.json", "r") as file:
@@ -35,6 +35,8 @@ def main():
         "urls"
     ]  # Assume the JSON config has a key "urls" with a list of URLs to scrape
 
+    storage_manager = StorageManager()
+
     for url in urls:
         soup = fetch_article(url)
         if soup:
@@ -43,7 +45,7 @@ def main():
             if content:
                 print(f"Article content: {content}")
                 if content:
-                    save_to_db(url, content)
+                    storage_manager.save_to_db(url, content)
 
 
 if __name__ == "__main__":
